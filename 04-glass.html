@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestige Plastic - Glass Collection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cyan:#00f5ff;--magenta:#ff00ff;--dark1:#0f0c29;--dark2:#302b63;--dark3:#24243e;--glass-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.1);--glass-shadow:0 8px 32px rgba(0,0,0,0.4);--text:#e0e0ff;--text-muted:rgba(224,224,255,0.6);--radius:16px;--transition:0.4s cubic-bezier(0.25,0.46,0.45,0.94)}
+body{font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;background:#0f0c29;color:var(--text);min-height:100vh;overflow-x:hidden}
+.animated-bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#0f0c29);background-size:400% 400%;animation:gradientShift 15s ease infinite}
+.animated-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,rgba(0,245,255,0.08),transparent),radial-gradient(ellipse 60% 80% at 80% 80%,rgba(255,0,255,0.06),transparent);pointer-events:none}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.floating-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-1;filter:blur(80px);animation:orbFloat 20s ease-in-out infinite}
+.floating-orb:nth-child(1){width:400px;height:400px;background:rgba(0,245,255,0.12);top:-10%;left:-5%;animation-delay:0s}
+.floating-orb:nth-child(2){width:500px;height:500px;background:rgba(255,0,255,0.08);bottom:-15%;right:-10%;animation-delay:-7s}
+.floating-orb:nth-child(3){width:300px;height:300px;background:rgba(0,245,255,0.06);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(60px,-80px) scale(1.1)}50%{transform:translate(-40px,60px) scale(0.95)}75%{transform:translate(80px,40px) scale(1.05)}}
+.glass{padding:24px;border-radius:var(--radius);background:var(--glass-bg);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.neon-border{position:relative;border:1px solid transparent;background-clip:padding-box}
+.neon-border::before{content:'';position:absolute;inset:-1px;border-radius:var(--radius);padding:1px;background:linear-gradient(135deg,var(--cyan),transparent 40%,transparent 60%,var(--magenta));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.neon-glow{text-shadow:0 0 20px rgba(0,245,255,0.5),0 0 60px rgba(0,245,255,0.2)}
+.neon-glow-magenta{text-shadow:0 0 20px rgba(255,0,255,0.5),0 0 60px rgba(255,0,255,0.2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 28px;border-radius:50px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:var(--transition);text-decoration:none;letter-spacing:0.5px}
+.btn-primary{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#0f0c29;box-shadow:0 0 30px rgba(0,245,255,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,245,255,0.5)}
+.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,0.25);color:var(--text)}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:var(--cyan)}
+.icon-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--glass-bg);border:1px solid var(--glass-border);cursor:pointer;transition:var(--transition);color:var(--text);font-size:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.icon-btn:hover{background:rgba(255,255,255,0.12);border-color:var(--cyan);box-shadow:0 0 30px rgba(0,245,255,0.2);transform:translateY(-2px)}
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;background:rgba(15,12,41,0.7);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid var(--glass-border);display:flex;align-items:center;justify-content:space-between}
+.header-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-size:22px;font-weight:700}
+.header-logo .logo-icon{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--magenta));display:flex;align-items:center;justify-content:center;font-size:18px;color:#0f0c29}
+.header-logo .logo-sub{font-size:11px;font-weight:400;color:var(--text-muted);display:block;margin-top:-2px}
+.header-logo span{background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-right{display:flex;align-items:center;gap:12px}
+.cart-btn{position:relative}
+.cart-count{position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;background:var(--magenta);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(255,0,255,0.5)}
+.container{max-width:1280px;margin:0 auto;padding:0 20px}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:50px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.2);font-size:13px;font-weight:500;color:var(--cyan);margin-bottom:30px;letter-spacing:1px;text-transform:uppercase}
+.hero-badge svg{width:16px;height:16px}
+.hero h1{font-size:clamp(40px,8vw,90px);font-weight:700;line-height:1.05;margin-bottom:20px;letter-spacing:-2px}
+.hero h1 .line1{display:block;color:var(--text)}
+.hero h1 .line2{display:block;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:clamp(16px,2vw,22px);color:var(--text-muted);max-width:600px;margin-bottom:40px;line-height:1.7}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.hero-glass-panels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.glass-panel{position:absolute;border-radius:20px;padding:30px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:panelFloat 8s ease-in-out infinite}
+.glass-panel:nth-child(1){top:15%;left:5%;width:200px;height:120px;animation-delay:0s}
+.glass-panel:nth-child(2){top:20%;right:8%;width:160px;height:160px;border-radius:50%;animation-delay:-2s}
+.glass-panel:nth-child(3){bottom:20%;left:10%;width:180px;height:100px;animation-delay:-4s}
+.glass-panel:nth-child(4){bottom:15%;right:5%;width:140px;height:140px;border-radius:50%;animation-delay:-6s}
+.glass-panel .panel-glow{width:100%;height:100%;border-radius:inherit;background:radial-gradient(circle at center,rgba(0,245,255,0.06),transparent)}
+@keyframes panelFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px)}}
+.scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;animation:bounce 2s infinite}
+.scroll-indicator svg{width:20px;height:20px}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.section{padding:80px 0}
+.section-header{text-align:center;margin-bottom:50px}
+.section-header h2{font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:12px}
+.section-header h2 span{background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-header p{color:var(--text-muted);font-size:16px;max-width:500px;margin:0 auto}
+.categories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:60px}
+.category-card{padding:28px 20px;text-align:center;cursor:pointer;transition:var(--transition);position:relative}
+.category-card:hover{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 0 40px rgba(0,245,255,0.15)}
+.category-card.active{background:rgba(0,245,255,0.08);border-color:var(--cyan);box-shadow:0 0 30px rgba(0,245,255,0.1)}
+.category-card .cat-icon{width:56px;height:56px;border-radius:14px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:24px;background:linear-gradient(135deg,rgba(0,245,255,0.1),rgba(255,0,255,0.1));border:1px solid rgba(255,255,255,0.06)}
+.category-card h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.category-card p{font-size:13px;color:var(--text-muted)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:24px}
+.product-card{padding:0;overflow:hidden;transition:var(--transition);cursor:pointer}
+.product-card:hover{transform:translateY(-8px);border-color:var(--cyan);box-shadow:0 0 50px rgba(0,245,255,0.15)}
+.product-card .product-img-wrap{position:relative;padding:20px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;height:240px;overflow:hidden}
+.product-card .product-img-wrap img{max-width:100%;max-height:200px;object-fit:contain;transition:var(--transition);filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3))}
+.product-card:hover .product-img-wrap img{transform:scale(1.08)}
+.product-card .product-badge{position:absolute;top:12px;left:12px;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.product-card .product-badge.sale{background:rgba(255,0,255,0.2);color:var(--magenta);border:1px solid rgba(255,0,255,0.3);box-shadow:0 0 15px rgba(255,0,255,0.2)}
+.product-card .product-badge.best{background:rgba(0,245,255,0.15);color:var(--cyan);border:1px solid rgba(0,245,255,0.3);box-shadow:0 0 15px rgba(0,245,255,0.2)}
+.product-card .product-badge.new{background:rgba(0,255,136,0.15);color:#00ff88;border:1px solid rgba(0,255,136,0.3)}
+.product-card .product-actions{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateX(10px);transition:var(--transition)}
+.product-card:hover .product-actions{opacity:1;transform:translateX(0)}
+.product-card .product-actions button{width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-border);background:rgba(15,12,41,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--text);cursor:pointer;transition:var(--transition);font-size:14px;display:flex;align-items:center;justify-content:center}
+.product-card .product-actions button:hover{background:rgba(0,245,255,0.15);border-color:var(--cyan)}
+.product-card .product-info{padding:20px}
+.product-card .product-info h3{font-size:15px;font-weight:600;margin-bottom:6px;line-height:1.3}
+.product-card .product-info .category-tag{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:block}
+.product-card .product-info .rating{display:flex;align-items:center;gap:4px;margin-bottom:10px;font-size:13px;color:#ffc107}
+.product-card .product-info .rating span{color:var(--text-muted);font-size:12px;margin-left:4px}
+.product-card .product-info .price-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.product-card .product-info .price-row .price{font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.product-card .product-info .price-row .old-price{font-size:15px;color:var(--text-muted);text-decoration:line-through}
+.product-card .product-info .price-row .discount{font-size:12px;padding:2px 8px;border-radius:50px;background:rgba(255,0,255,0.12);color:var(--magenta);font-weight:600}
+.product-card .product-info .add-btn{width:100%;padding:12px;border-radius:50px;border:none;background:linear-gradient(135deg,rgba(0,245,255,0.15),rgba(255,0,255,0.15));color:var(--text);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:var(--transition);border:1px solid rgba(255,255,255,0.1)}
+.product-card .product-info .add-btn:hover{background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#0f0c29;box-shadow:0 0 30px rgba(0,245,255,0.3)}
+/* Cart Sidebar */
+.cart-overlay{position:fixed;inset:0;z-index:2000;background:rgba(15,12,41,0.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:var(--transition)}
+.cart-overlay.active{opacity:1;pointer-events:all}
+.cart-sidebar{position:fixed;top:0;right:0;width:420px;max-width:100vw;height:100vh;z-index:2001;background:rgba(15,12,41,0.7);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-left:1px solid var(--glass-border);box-shadow:-10px 0 60px rgba(0,0,0,0.5);display:flex;flex-direction:column;transform:translateX(100%);transition:var(--transition)}
+.cart-sidebar.active{transform:translateX(0)}
+.cart-sidebar .cart-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--glass-border)}
+.cart-sidebar .cart-header h2{font-size:20px;font-weight:700}
+.cart-sidebar .cart-header h2 span{color:var(--text-muted);font-size:14px;font-weight:400}
+.cart-sidebar .cart-header .close-cart{width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-border);background:transparent;color:var(--text);cursor:pointer;font-size:18px;transition:var(--transition);display:flex;align-items:center;justify-content:center}
+.cart-sidebar .cart-header .close-cart:hover{background:rgba(255,0,0,0.1);border-color:#ff4444}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px}
+.cart-items::-webkit-scrollbar{width:4px}
+.cart-items::-webkit-scrollbar-track{background:transparent}
+.cart-items::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:4px}
+.cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--glass-border)}
+.cart-item:last-child{border-bottom:none}
+.cart-item img{width:72px;height:72px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,0.03);padding:8px}
+.cart-item .item-info{flex:1;min-width:0}
+.cart-item .item-info h4{font-size:14px;font-weight:600;margin-bottom:4px;line-height:1.3}
+.cart-item .item-info .item-price{font-size:15px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cart-item .qty-controls{display:flex;align-items:center;gap:10px;margin-top:8px}
+.cart-item .qty-controls button{width:28px;height:28px;border-radius:50%;border:1px solid var(--glass-border);background:rgba(255,255,255,0.05);color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.cart-item .qty-controls button:hover{background:rgba(0,245,255,0.1);border-color:var(--cyan)}
+.cart-item .qty-controls span{font-size:14px;font-weight:600;min-width:20px;text-align:center}
+.cart-item .remove-item{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:4px;transition:var(--transition);align-self:flex-start}
+.cart-item .remove-item:hover{color:#ff4444}
+.cart-empty{text-align:center;padding:60px 24px;color:var(--text-muted)}
+.cart-empty svg{width:64px;height:64px;margin-bottom:16px;opacity:0.3}
+.cart-empty p{font-size:16px}
+.cart-footer{padding:20px 24px;border-top:1px solid var(--glass-border)}
+.cart-footer .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cart-footer .cart-total span:first-child{font-size:14px;color:var(--text-muted)}
+.cart-footer .cart-total .total-amount{font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cart-footer .checkout-btn{width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#0f0c29;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:var(--transition);letter-spacing:0.5px}
+.cart-footer .checkout-btn:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,245,255,0.4)}
+/* Search */
+.search-overlay{position:fixed;inset:0;z-index:1500;background:rgba(15,12,41,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:var(--transition);display:flex;flex-direction:column;align-items:center;padding-top:120px}
+.search-overlay.active{opacity:1;pointer-events:all}
+.search-overlay .search-box{width:90%;max-width:560px;position:relative}
+.search-overlay .search-box input{width:100%;padding:18px 56px 18px 24px;border-radius:60px;border:1px solid rgba(0,245,255,0.3);background:rgba(15,12,41,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:var(--text);font-family:inherit;font-size:18px;outline:none;transition:var(--transition);box-shadow:0 0 40px rgba(0,245,255,0.1)}
+.search-overlay .search-box input:focus{border-color:var(--cyan);box-shadow:0 0 60px rgba(0,245,255,0.2)}
+.search-overlay .search-box input::placeholder{color:var(--text-muted)}
+.search-overlay .search-box .close-search{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;background:transparent;color:var(--text);cursor:pointer;font-size:20px;transition:var(--transition)}
+.search-overlay .search-box .close-search:hover{background:rgba(255,0,0,0.1);color:#ff4444}
+.search-overlay .search-results{width:90%;max-width:560px;max-height:50vh;overflow-y:auto;margin-top:20px;border-radius:var(--radius);background:rgba(15,12,41,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);padding:8px}
+.search-overlay .search-results::-webkit-scrollbar{width:4px}
+.search-overlay .search-results::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:4px}
+.search-result-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer;transition:var(--transition)}
+.search-result-item:hover{background:rgba(0,245,255,0.06)}
+.search-result-item img{width:48px;height:48px;border-radius:8px;object-fit:contain;background:rgba(255,255,255,0.03);padding:4px}
+.search-result-item .result-info h4{font-size:14px;font-weight:600}
+.search-result-item .result-info p{font-size:13px;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
+.search-result-item.highlight{background:rgba(0,245,255,0.12)}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;z-index:1800;background:rgba(15,12,41,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:var(--transition);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-content{width:100%;max-width:800px;max-height:90vh;overflow-y:auto;padding:0;border-radius:20px;display:flex;flex-wrap:wrap;transform:scale(0.9) translateY(20px);transition:var(--transition)}
+.modal-overlay.active .modal-content{transform:scale(1) translateY(0)}
+.modal-content::-webkit-scrollbar{width:4px}
+.modal-content::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:4px}
+.modal-content .modal-image{flex:1;min-width:280px;padding:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.02)}
+.modal-content .modal-image img{max-width:100%;max-height:300px;object-fit:contain;filter:drop-shadow(0 20px 40px rgba(0,0,0,0.3))}
+.modal-content .modal-details{flex:1;min-width:280px;padding:40px 32px}
+.modal-content .modal-details .modal-badge{display:inline-block;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;background:rgba(0,245,255,0.12);color:var(--cyan);border:1px solid rgba(0,245,255,0.2)}
+.modal-content .modal-details h2{font-size:22px;font-weight:700;margin-bottom:8px;line-height:1.3}
+.modal-content .modal-details .modal-rating{display:flex;align-items:center;gap:6px;margin-bottom:12px;font-size:14px;color:#ffc107}
+.modal-content .modal-details .modal-rating span{color:var(--text-muted);font-size:13px}
+.modal-content .modal-details .modal-desc{color:var(--text-muted);font-size:15px;line-height:1.7;margin-bottom:16px}
+.modal-content .modal-details .modal-features{list-style:none;margin-bottom:20px}
+.modal-content .modal-details .modal-features li{position:relative;padding-left:24px;margin-bottom:8px;font-size:14px;color:var(--text-muted)}
+.modal-content .modal-details .modal-features li::before{content:'\2726';position:absolute;left:0;color:var(--cyan);font-size:10px;top:2px}
+.modal-content .modal-details .modal-price-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.modal-content .modal-details .modal-price-row .m-price{font-size:32px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-content .modal-details .modal-price-row .m-old{font-size:18px;color:var(--text-muted);text-decoration:line-through}
+.modal-content .modal-details .modal-add-btn{width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--cyan),var(--magenta));color:#0f0c29;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:var(--transition)}
+.modal-content .modal-details .modal-add-btn:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,245,255,0.3)}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-border);background:rgba(15,12,41,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--text);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:var(--transition);z-index:2}
+.modal-close:hover{background:rgba(255,0,0,0.1);border-color:#ff4444}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:3000;display:flex;flex-direction:column;gap:12px}
+.toast{padding:14px 20px;border-radius:12px;background:rgba(15,12,41,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);box-shadow:0 8px 32px rgba(0,0,0,0.4);color:var(--text);font-size:14px;display:flex;align-items:center;gap:10px;animation:slideIn 0.4s ease;max-width:360px}
+.toast .toast-icon{color:var(--cyan)}
+.toast.error .toast-icon{color:#ff4444}
+@keyframes slideIn{from{transform:translateX(100px);opacity:0}to{transform:translateX(0);opacity:1}}
+.footer{padding:40px 20px;text-align:center;border-top:1px solid var(--glass-border);margin-top:40px}
+.footer p{color:var(--text-muted);font-size:14px}
+.footer .footer-brand{font-size:18px;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+@media(max-width:768px){
+.header{padding:12px 16px}
+.header-logo .logo-sub{display:none}
+.hero{padding:100px 16px 60px}
+.hero-glass-panels{display:none}
+.products-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.cart-sidebar{width:100%}
+.modal-content{flex-direction:column}
+.modal-content .modal-image{padding:24px;min-width:auto}
+.modal-content .modal-details{padding:24px}
+.search-overlay{padding-top:100px}
+.categories-grid{grid-template-columns:repeat(2,1fr)}
+.toast-container{left:16px;right:16px;bottom:16px}
+.toast{max-width:100%}
+}
+@media(max-width:480px){
+.products-grid{grid-template-columns:1fr}
+.categories-grid{grid-template-columns:1fr 1fr}
+.glass-panel{display:none}
+}
+</style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="floating-orb"></div>
+<div class="floating-orb"></div>
+<div class="floating-orb"></div>
+
+<header class="header">
+  <a href="#" class="header-logo">
+    <div class="logo-icon">P</div>
+    <div>
+      <span>Prestige</span> <span style="font-weight:300">Plastic</span>
+      <div class="logo-sub">Dubai, UAE</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <button class="icon-btn" onclick="openSearch()" aria-label="Search">&#128269;</button>
+    <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="Cart">
+      &#128722; <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="hero-glass-panels">
+      <div class="glass-panel"><div class="panel-glow"></div></div>
+      <div class="glass-panel"><div class="panel-glow"></div></div>
+      <div class="glass-panel"><div class="panel-glow"></div></div>
+      <div class="glass-panel"><div class="panel-glow"></div></div>
+    </div>
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Premium Plasticware Since 1998
+    </div>
+    <h1>
+      <span class="line1">Elevate Everyday</span>
+      <span class="line2">Living With Glass</span>
+    </h1>
+    <p>Discover our futuristic collection of premium home, kitchen, dining and cooling solutions. Engineered for elegance, built to last.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Explore Collection &#8595;</button>
+      <button class="btn btn-outline" onclick="openSearch()">Search Products &#128269;</button>
+    </div>
+    <div class="scroll-indicator">Scroll &#8595;</div>
+  </section>
+
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our <span>Collection</span></h2>
+        <p>Premium quality meets futuristic design. Browse our range of innovative plasticware.</p>
+      </div>
+      <div class="categories-grid" id="categories"></div>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">&#10022; Prestige Plastic</div>
+    <p>Dubai, UAE &bull; Premium Plasticware Since 1998</p>
+  </footer>
+</main>
+
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h2>Shopping Cart <span id="cartItemCount">(0)</span></h2>
+    <button class="close-cart" onclick="toggleCart()">&#10005;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      <p>Your cart is empty</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span>Total</span>
+      <span class="total-amount" id="cartTotal">&#8377;0</span>
+    </div>
+    <button class="checkout-btn">Proceed to Checkout &#8594;</button>
+  </div>
+</aside>
+
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search products..." oninput="handleSearch(this.value)" autofocus>
+    <button class="close-search" onclick="closeSearch()">&#10005;</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="glass modal-content neon-border" id="modalContent"></div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const CDN='https://appollostore.com/cdn/shop/files/';
+const products=[
+{id:1,name:'Crisper Food Container (600ml)',category:'kitchen',price:480,oldPrice:600,rating:4,reviews:128,badge:'sale',image:CDN+'1_63018c31-55a2-4473-a1d6-0c146a0c4592_600x600.png',description:'FDA Approved Food Grade Material. Keeps cereals fresh and dry. Small - 12.5 x 16 x 5.2cm',features:['FDA Approved Food Grade Material','ECO Friendly','Keeps food fresh and dry','Small - 12.5 x 16 x 5.2cm','Stackable design']},
+{id:2,name:'Chef Food Warmer XL (4000ml)',category:'kitchen',price:2520,oldPrice:3150,rating:5,reviews:89,badge:'best',image:CDN+'Hot-pot-food-warmer_Xl_600x600.jpg',description:'Non-Magnetic stainless steel liner. Retains heat for 4-6 hours. Perfect for Roti, BBQ, Home & Picnic.',features:['Stainless steel liner','Retains heat 4-6 hours','Perfect for Roti & BBQ','Extra Large - 38x31x14cm','Ideal for home & picnic']},
+{id:3,name:'Easy Stack Jar Pack of 3',category:'kitchen',price:800,oldPrice:1000,rating:4,reviews:205,badge:'',image:CDN+'Easy_Stack_Jar_Sml_Size_600x600.png',description:'Smart storage jars with airtight twist-lock lids. Space-saving stackable design in 3 sizes.',features:['Airtight twist-lock lid','Space-saving stackable','3 sizes - S/M/L','Food-safe materials','Easy grip handle']},
+{id:4,name:'Eco Lock Food Keeper (Medium)',category:'kitchen',price:1320,oldPrice:1650,rating:4,reviews:67,badge:'new',image:CDN+'2_a21ea9b0-41d5-4d7e-8eed-71455a645cc4_600x600.webp',description:'Air-tight and leak-proof crystal clear container. FDA Approved food-grade material. Medium 24x20x8cm.',features:['Air-tight & leak-proof','Crystal clear body','FDA Approved material','Medium - 24x20x8cm','Lightweight']},
+{id:5,name:'Alpha Cooler M-1 (7Ltr)',category:'coolers',price:1920,oldPrice:2400,rating:5,reviews:312,badge:'best',image:CDN+'AlphaCooler7L-M1-Orange-Resize850x850px_600x600.webp',description:'Premium insulation water cooler for indoor/outdoor. 99% Pure Virgin Plastic, FDA Approved, BPA free.',features:['Premium insulation','99% Pure Virgin Plastic','FDA Approved & BPA free','Large bail handle','7 Liter capacity','27.3x25x23.5cm']},
+{id:6,name:'Hydro Water Dispenser',category:'home',price:1080,oldPrice:1350,rating:4,reviews:156,badge:'',image:CDN+'Hydro_Dispenser_Red-Appollo_600x600.webp',description:'Non-electric water dispenser. Fits 4.5L to 18.9L bottles. Lightweight, leak-proof, one-key operation.',features:['No electricity needed','Fits 4.5L-18.9L bottles','Leak-proof design','One-key operation','Lightweight & portable']},
+{id:7,name:'Magnum Cooler 22 Litre',category:'coolers',price:5160,oldPrice:6450,rating:5,reviews:78,badge:'best',image:CDN+'Magnum_Cooler_22_Litre_In_Green_600x600.webp',description:'PU foam insulated cooler with easy-pull tap and dual handles. Keeps beverages cool for 4-6 hours.',features:['PU Insulated - 4-6hrs cooling','Easy-pull tap','Dual handles','Leakproof twist-lock lid','Heavy-duty exterior','39x36x43cm']},
+{id:8,name:'Rush Sports Bottle (1Ltr)',category:'home',price:1360,oldPrice:1700,rating:4,reviews:243,badge:'',image:CDN+'rush_sports_bottle_blue_600x600.png',description:'Sports bottle with twist-lock cap and controlled sipping spout. Perfect for active lifestyles.',features:['Controlled sipping spout','Leakproof twist-lock cap','Sturdy carry handle','Wide mouth for easy cleaning','Pack of 2 - 1Ltr each']},
+{id:9,name:'Clear Lock Pack of 3',category:'home',price:3200,oldPrice:4000,rating:4,reviews:89,badge:'',image:CDN+'clearlockSML_600x600.webp',description:'Modular stackable storage boxes with secure lock system. 3 sizes: S/M/L. Transparent body.',features:['Secure lock system','Modular & stackable','3 sizes - S/M/L','Transparent body','Multi-purpose use']},
+{id:10,name:'Kitchen Multi-Purpose Rack',category:'kitchen',price:2912,oldPrice:3640,rating:5,reviews:45,badge:'best',image:CDN+'Kitchen_Multi-Purpose_Rack_600x600.webp',description:'Three-tier stackable rack with top storage box. FDA-approved food-grade plastic. Space-saving design.',features:['Three-tier stackable','Includes top storage box','FDA-approved plastic','BPA-free & Eco-friendly','33.5x33.5x88.5cm']},
+{id:11,name:'Polka Basket',category:'home',price:680,oldPrice:850,rating:4,reviews:167,badge:'best',image:CDN+'polka_basket_600x600.jpg',description:'Ultimate storage solution with sturdy handle and smart drainage holes. Compact and stackable.',features:['Sturdy carry handle','Drainage holes','Compact & stackable','Lightweight','30.5x20x18cm']},
+{id:12,name:'Fiji Bin Dustbin (30Ltr)',category:'home',price:2480,oldPrice:3100,rating:4,reviews:92,badge:'best',image:CDN+'Fiji-Wastebin_600x600.jpg',description:'Foot-pedal dustbin with color-coded lids. Crack-resistant, dent-proof, with built-in bag hooks.',features:['Foot-pedal operation','Color-coded lids','Crack-resistant','Built-in bag hooks','30 Liter capacity','38.2x36x46cm']},
+{id:13,name:'Milan Bowl Pack of 7',category:'dining',price:1480,oldPrice:1850,rating:5,reviews:234,badge:'best',image:CDN+'MilanBowls-7-pieceSet-Resize06_600x600.png',description:'Nestable bowls in 5 capacities. Perfect for storing, mixing, and serving. Durable food-grade material.',features:['7-piece set','Nestable design','Food-grade material','5 capacities','Easy to clean']},
+{id:14,name:'Smart Serving Tray (Medium)',category:'dining',price:1120,oldPrice:1400,rating:4,reviews:56,badge:'',image:CDN+'Smart_Serving_Tray_Medium_2_pcs_set_600x600.webp',description:'Premium ABS serving tray. Carries cups, plates, food, fruits. Durable, waterproof, easy to clean.',features:['Premium ABS material','Durable & waterproof','Medium - 29x21x1.5cm','Easy to clean','Space-saving']},
+{id:15,name:'Tulip Cutlery Stand',category:'dining',price:440,oldPrice:550,rating:4,reviews:73,badge:'',image:CDN+'tulip-cutlery-stand_600x600.jpg',description:'Compact cutlery stand for spatulas, spoons, tongs, whisks. FDA approved, BPA free, sturdy base.',features:['Stores all utensils','Food grade plastic','Sturdy non-slip base','FDA Approved & BPA free','11x20x14cm']},
+{id:16,name:'Snack Jar Pack of 3',category:'dining',price:1200,oldPrice:1500,rating:4,reviews:148,badge:'sale',image:CDN+'Snack_Jar_3_pcs_Set_in_Brown_600x600.webp',description:'Reusable snack jars with airtight lids. Set of 3 sizes: 1L, 2L, 3L. Keeps contents fresh and dry.',features:['Airtight lid','3 sizes - 1L/2L/3L','Reusable','BPA-free','Large - 14.7x12x21.7cm']}
+];
+
+const categoryIcons={kitchen:'&#127858;',coolers:'&#127777;',home:'&#127968;',dining:'&#127860;'};
+const categoryLabels={kitchen:'Kitchen',coolers:'Coolers',home:'Home',dining:'Dining'};
+
+let cart=[];
+let currentFilter='all';
+
+function renderCategories(){
+  const cats=document.getElementById('categories');
+  const allCats=[{key:'all',label:'All Products',icon:'&#9733;'}];
+  const keys=[...new Set(products.map(p=>p.category))];
+  keys.forEach(k=>allCats.push({key:k,label:categoryLabels[k]||k,icon:categoryIcons[k]||'&#9632;'}));
+  cats.innerHTML=allCats.map(c=>`
+    <div class="glass category-card${currentFilter===c.key?' active':''}" onclick="filterCategory('${c.key}')">
+      <div class="cat-icon">${c.icon}</div>
+      <h3>${c.label}</h3>
+      <p>${c.key==='all'?products.length+' items':products.filter(p=>p.category===c.key).length+' items'}</p>
+    </div>
+  `).join('');
+}
+
+function filterCategory(key){
+  currentFilter=key;
+  renderCategories();
+  renderProducts();
+}
+
+function renderProducts(){
+  const grid=document.getElementById('productsGrid');
+  const filtered=currentFilter==='all'?products:products.filter(p=>p.category===currentFilter);
+  grid.innerHTML=filtered.map(p=>{
+    const discount=Math.round((1-p.price/p.oldPrice)*100);
+    const stars='&#9733;'.repeat(p.rating)+'&#9734;'.repeat(5-p.rating);
+    const badgeHtml=p.badge?`<span class="product-badge ${p.badge}">${p.badge==='sale'?'Sale!':p.badge==='best'?'Best Seller':'New'}</span>`:'';
+    return `
+    <div class="glass product-card neon-border">
+      <div class="product-img-wrap">
+        ${badgeHtml}
+        <div class="product-actions">
+          <button onclick="event.stopPropagation();openQuickView(${p.id})" title="Quick View">&#128065;</button>
+          <button onclick="event.stopPropagation();addToCart(${p.id})" title="Add to Cart">&#43;</button>
+        </div>
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text fill=%22%23888%22 font-size=%2212%22 x=%2220%22 y=%2255%22>No Image</text></svg>'">
+      </div>
+      <div class="product-info">
+        <span class="category-tag">${categoryLabels[p.category]||p.category}</span>
+        <h3>${p.name}</h3>
+        <div class="rating">${stars} <span>(${p.reviews})</span></div>
+        <div class="price-row">
+          <span class="price">&#8377;${p.price.toLocaleString()}</span>
+          <span class="old-price">&#8377;${p.oldPrice.toLocaleString()}</span>
+          <span class="discount">-${discount}%</span>
+        </div>
+        <button class="add-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const existing=cart.find(x=>x.id===id);
+  if(existing){existing.qty++}
+  else{cart.push({...p,qty:1})}
+  updateCart();
+  showToast('Added to cart','&#10003; '+p.name);
+}
+
+function removeFromCart(id){
+  cart=cart.filter(x=>x.id!==id);
+  updateCart();
+}
+
+function updateQty(id,delta){
+  const item=cart.find(x=>x.id===id);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0)removeFromCart(id);
+  else updateCart();
+}
+
+function updateCart(){
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cartItemCount').textContent='('+count+')';
+  const container=document.getElementById('cartItems');
+  const footer=document.getElementById('cartFooter');
+  if(!cart.length){
+    document.getElementById('cartCount').textContent='0';
+    container.innerHTML='<div class="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg><p>Your cart is empty</p></div>';
+    footer.style.display='none';
+    return;
+  }
+  footer.style.display='block';
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartTotal').textContent='&#8377;'+total.toLocaleString();
+  container.innerHTML=cart.map(i=>`
+    <div class="cart-item">
+      <img src="${i.image}" alt="${i.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text fill=%22%23888%22 font-size=%2210%22 x=%2220%22 y=%2255%22>No Image</text></svg>'">
+      <div class="item-info">
+        <h4>${i.name}</h4>
+        <div class="item-price">&#8377;${(i.price*i.qty).toLocaleString()}</div>
+        <div class="qty-controls">
+          <button onclick="updateQty(${i.id},-1)">&#8722;</button>
+          <span>${i.qty}</span>
+          <button onclick="updateQty(${i.id},1)">&#43;</button>
+        </div>
+      </div>
+      <button class="remove-item" onclick="removeFromCart(${i.id})">&#10005;</button>
+    </div>
+  `).join('');
+}
+
+function toggleCart(){
+  document.getElementById('cartOverlay').classList.toggle('active');
+  document.getElementById('cartSidebar').classList.toggle('active');
+}
+
+function openSearch(){
+  document.getElementById('searchOverlay').classList.add('active');
+  setTimeout(()=>document.getElementById('searchInput').focus(),100);
+}
+
+function closeSearch(){
+  document.getElementById('searchOverlay').classList.remove('active');
+  document.getElementById('searchResults').innerHTML='';
+  document.getElementById('searchInput').value='';
+}
+
+function handleSearch(q){
+  const results=document.getElementById('searchResults');
+  if(!q.trim()){results.innerHTML='';return}
+  const matches=products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||p.category.toLowerCase().includes(q.toLowerCase()));
+  if(!matches.length){
+    results.innerHTML='<div style="padding:20px;text-align:center;color:var(--text-muted)">No products found</div>';
+    return;
+  }
+  results.innerHTML=matches.map(p=>`
+    <div class="search-result-item" onclick="closeSearch();openQuickView(${p.id})">
+      <img src="${p.image}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text fill=%22%23888%22 font-size=%2210%22 x=%2220%22 y=%2255%22>No Image</text></svg>'">
+      <div class="result-info">
+        <h4>${p.name}</h4>
+        <p>&#8377;${p.price.toLocaleString()}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openQuickView(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const stars='&#9733;'.repeat(p.rating)+'&#9734;'.repeat(5-p.rating);
+  const discount=Math.round((1-p.price/p.oldPrice)*100);
+  const overlay=document.getElementById('modalOverlay');
+  document.getElementById('modalContent').innerHTML=`
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <div class="modal-image"><img src="${p.image}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text fill=%22%23888%22 font-size=%2212%22 x=%2220%22 y=%2255%22>No Image</text></svg>'"></div>
+    <div class="modal-details">
+      <span class="modal-badge">${categoryLabels[p.category]||p.category}</span>
+      <h2>${p.name}</h2>
+      <div class="modal-rating">${stars} <span>(${p.reviews} reviews)</span></div>
+      <p class="modal-desc">${p.description}</p>
+      <ul class="modal-features">${p.features.map(f=>'<li>'+f+'</li>').join('')}</ul>
+      <div class="modal-price-row">
+        <span class="m-price">&#8377;${p.price.toLocaleString()}</span>
+        <span class="m-old">&#8377;${p.oldPrice.toLocaleString()}</span>
+        <span class="discount" style="padding:3px 10px;border-radius:50px;background:rgba(255,0,255,0.12);color:var(--magenta);font-size:13px;font-weight:600">-${discount}%</span>
+      </div>
+      <button class="modal-add-btn" onclick="addToCart(${p.id});closeModal()">Add to Cart — &#8377;${p.price.toLocaleString()}</button>
+    </div>`;
+  overlay.classList.add('active');
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeModal();closeSearch();if(document.getElementById('cartSidebar').classList.contains('active'))toggleCart()}
+});
+
+function showToast(msg,icon='&#10003;',type=''){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className='toast'+(type?' '+type:'');
+  t.innerHTML='<span class="toast-icon">'+icon+'</span>'+msg;
+  c.appendChild(t);
+  t.addEventListener('animationend',()=>{setTimeout(()=>{t.style.opacity='0';t.style.transition='0.3s';setTimeout(()=>t.remove(),300)},2000)},{once:true});
+}
+
+renderCategories();
+renderProducts();
+</script>
+</body>
+</html>

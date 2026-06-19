@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prestige Plastic – Premium Plastic Products</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement-bar">
+  <div class="container">Use Code PRESTIGE10 & Enjoy an EXTRA 10% OFF + Free Shipping on Orders Above Rs. 2,999!</div>
+</div>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="logo"><a href="/"><span class="logo-icon">&#9670;</span> PRESTIGE</a></div>
+    <nav class="nav" id="nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li class="has-dropdown">
+          <a href="#">Categories <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a>
+          <div class="dropdown">
+            <div class="dropdown-grid">
+              <div class="dropdown-col">
+                <h4>Drinkware</h4>
+                <a href="#" onclick="event.preventDefault();goToCategory('coolers')">Coolers</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('coolers')">Water Bottles</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('coolers')">Jugs</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('coolers')">Tumblers</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('coolers')">Mugs</a>
+              </div>
+              <div class="dropdown-col">
+                <h4>KitchenWare</h4>
+                <a href="#" onclick="event.preventDefault();goToCategory('kitchen')">Food Containers</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('kitchen')">Food Warmers</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('kitchen')">Lunch Carriers</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('dining')">Plates & Bowls</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('dining')">Food Jars</a>
+              </div>
+              <div class="dropdown-col">
+                <h4>Household</h4>
+                <a href="#" onclick="event.preventDefault();goToCategory('home')">Storage Boxes</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('home')">Dustbins</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('home')">Hangers</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('kitchen')">Racks</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('home')">Decor</a>
+              </div>
+              <div class="dropdown-col">
+                <h4>Kids</h4>
+                <a href="#" onclick="event.preventDefault();goToCategory('all')">Lunch Boxes</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('all')">Water Bottles</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('all')">Storage Boxes</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('all')">Furniture</a>
+                <a href="#" onclick="event.preventDefault();goToCategory('all')">Potty Seats</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </nav>
+    <div class="header-icons">
+      <button onclick="toggleSearch()" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button onclick="toggleCart()" aria-label="Cart" class="cart-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search products..." oninput="handleSearch(this.value)">
+    <button onclick="closeSearch()">&times;</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- Cart Sidebar -->
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Shopping Cart</h3>
+    <button onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your cart is empty</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">Subtotal: <span id="cartTotal">Rs. 0</span></div>
+    <button class="checkout-btn" onclick="showPage('checkout')">Proceed to Checkout</button>
+  </div>
+</div>
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+  <div class="mobile-menu-links">
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">Home</a>
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();goToCategory('coolers')">Drinkware</a>
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();goToCategory('kitchen')">KitchenWare</a>
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();goToCategory('home')">Household</a>
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();goToCategory('all')">Kids</a>
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();goToCategory('all')">New Arrivals</a>
+    <a href="#" onclick="event.preventDefault();toggleMobileMenu();switchTab('all',document.querySelector('.tab[data-tab=\"all\"]'));document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">Sale</a>
+  </div>
+</div>
+
+<!-- 3D Scene Canvas (full page) -->
+<div id="scene-container"></div>
+
+<!-- Hero -->
+<section class="section-hero" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-subtitle">Premium Quality</span>
+    <h1>Elevate Your Home<br>with <span class="gold-text">Premium Plastic</span></h1>
+    <p>Discover durable, stylish, and affordable plastic products for every room.</p>
+    <div class="hero-btns">
+      <a href="#" class="hero-btn" onclick="event.preventDefault();goToCategory('all')">Shop Now</a>
+      <a href="#" class="hero-btn hero-btn-outline" onclick="event.preventDefault();document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">Explore Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- Features Bar -->
+<section class="features-bar">
+  <div class="container features-grid">
+    <div class="feature-item"><i class="fas fa-shield-alt"></i> Quality Products</div>
+    <div class="feature-item"><i class="fas fa-undo-alt"></i> 7 Days Returns</div>
+    <div class="feature-item"><i class="fas fa-headset"></i> Friendly Support</div>
+    <div class="feature-item"><i class="fas fa-gift"></i> Member Gifts</div>
+  </div>
+</section>
+
+<!-- Featured Collections -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Collections</h2>
+      <p>Handpicked just for you</p>
+    </div>
+    <div class="collections-grid">
+      <a href="#" class="collection-card" onclick="event.preventDefault();goToCategory('coolers')" style="background:linear-gradient(135deg,#0f1b2d,#1a2d4e)">
+        <span class="collection-icon">&#9749;</span>
+        <h3>Drinkware</h3>
+        <p>150+ Variants</p>
+      </a>
+      <a href="#" class="collection-card" onclick="event.preventDefault();goToCategory('kitchen')" style="background:linear-gradient(135deg,#1a2d4e,#2a4a7f)">
+        <span class="collection-icon">&#127858;</span>
+        <h3>KitchenWare</h3>
+        <p>200+ Variants</p>
+      </a>
+      <a href="#" class="collection-card" onclick="event.preventDefault();goToCategory('home')" style="background:linear-gradient(135deg,#2a4a7f,#3a5a8f)">
+        <span class="collection-icon">&#127968;</span>
+        <h3>Household</h3>
+        <p>100+ Variants</p>
+      </a>
+      <a href="#" class="collection-card" onclick="event.preventDefault();goToCategory('all')" style="background:linear-gradient(135deg,#0f1b2d,#2a4a7f)">
+        <span class="collection-icon">&#128118;</span>
+        <h3>Kidsware</h3>
+        <p>50+ Variants</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Product Tabs -->
+<section class="section" id="productsSection">
+  <div class="container">
+    <div class="section-header">
+      <h2>Our Products</h2>
+      <div class="view-toggle">
+        <button class="view-btn active" data-view="story" onclick="switchView('story',this)">Story</button>
+        <button class="view-btn" data-view="store" onclick="switchView('store',this)">Store</button>
+      </div>
+      <div class="tabs" id="productTabs">
+        <button class="tab active" data-tab="all" onclick="switchTab('all',this)">All</button>
+        <button class="tab" data-tab="kitchen" onclick="switchTab('kitchen',this)">KitchenWare</button>
+        <button class="tab" data-tab="coolers" onclick="switchTab('coolers',this)">Drinkware</button>
+        <button class="tab" data-tab="home" onclick="switchTab('home',this)">Household</button>
+        <button class="tab" data-tab="dining" onclick="switchTab('dining',this)">Dining</button>
+      </div>
+    </div>
+    <div class="product-grid stylish-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- Banner CTA -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Become a <span class="gold">Wholesale</span> Partner</h2>
+      <p>Bulk orders at special prices. Contact our B2B team for custom requirements.</p>
+      <a href="#" class="cta-btn" onclick="event.preventDefault();showToast('B2B inquiries: b2b@prestigeplastic.com')">Contact B2B Team</a>
+    </div>
+  </div>
+</section>
+
+<!-- Trending Products -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Trending Now</h2>
+    </div>
+    <div class="trending-grid" id="trendingGrid"></div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-content">
+      <h3>Join Our Newsletter</h3>
+      <p>Subscribe for exclusive offers, new arrivals, and more.</p>
+      <form>
+        <input type="email" placeholder="Your email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo"><span class="logo-icon">&#9670;</span> PRESTIGE</div>
+        <p>Premium plastic products for modern living. Quality, durability, and style since 2024.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#" onclick="event.preventDefault();showPage('about')">About Us</a>
+        <a href="#" onclick="event.preventDefault();showPage('b2b')">B2B Wholesale</a>
+        <a href="#" onclick="event.preventDefault();showPage('delivery')">Delivery Policy</a>
+        <a href="#" onclick="event.preventDefault();showPage('returns')">Return Policy</a>
+        <a href="#" onclick="event.preventDefault();showPage('privacy')">Privacy Policy</a>
+        <a href="#" onclick="event.preventDefault();showPage('contact')">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Popular Categories</h4>
+        <a href="#" onclick="event.preventDefault();goToCategory('coolers')">Drinkware</a>
+        <a href="#" onclick="event.preventDefault();goToCategory('kitchen')">KitchenWare</a>
+        <a href="#" onclick="event.preventDefault();goToCategory('home')">Household</a>
+        <a href="#" onclick="event.preventDefault();goToCategory('all')">Kidsware</a>
+        <a href="#" onclick="event.preventDefault();goToCategory('kitchen')">Food Warmers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p>Dubai, UAE<br>+971 50 123 4567</p>
+        <p>info@prestigeplastic.com</p>
+        <p style="font-size:12px;margin-top:8px;color:rgba(255,255,255,0.4)">Mon-Sat: 9AM - 8PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Prestige Plastic. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Quick View Modal -->
+<div class="modal" id="quickViewModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeQuickView()">&times;</button>
+    <div class="modal-grid" id="modalContent"></div>
+  </div>
+</div>
+
+<!-- Page Content Modal -->
+<div class="modal" id="pageModal">
+  <div class="modal-content" style="max-width:720px">
+    <button class="modal-close" onclick="closePageModal()">&times;</button>
+    <div id="pageContent" style="padding:40px"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+  <!-- Back to Top -->
+  <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/971501234567" target="_blank" class="float-whatsapp" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+  <script src="three-hero.js"></script>
+</body>
+</html>
